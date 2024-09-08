@@ -1,0 +1,45 @@
+minimum instant: 0
+maximum instant: 3
+
+Coin takes-values {Heads, Tails}
+Dice takes-values {One, Two, Three, Four, Five, Six}
+initially-one-of {({Coin=Heads, Dice=Four}, 0.8), ({Coin=Tails, Dice=Four}, 0.2)}
+{TossCoin=true} causes-one-of
+					{
+						( {Coin=Heads}, 0.49 ),
+						( {Coin=Tails}, 0.49 ),
+                        ( {}, 0.02 )
+					}
+
+{TossDice=true} causes-one-of
+{
+    ( {Dice=One}, 0.16 ),
+    ( {Dice=Two}, 0.16 ),
+    ( {Dice=Three}, 0.16 ),
+    ( {Dice=Four}, 0.16 ),
+    ( {Dice=Five}, 0.16 ),
+    ( {Dice=Six}, 0.16 ),
+    ({}, 0.04 )
+}
+
+{TossDice=true, TossCoin=true} causes-one-of
+{
+    ( {Dice=One, Coin=Heads}, 0.08 ),
+    ( {Dice=Two, Coin=Heads}, 0.08 ),
+    ( {Dice=Three, Coin=Heads}, 0.08 ),
+    ( {Dice=Four, Coin=Heads}, 0.08 ),
+    ( {Dice=Five, Coin=Heads}, 0.08 ),
+    ( {Dice=Six, Coin=Heads}, 0.08 ),
+    ( {Dice=One, Coin=Tails}, 0.08 ),
+    ( {Dice=Two, Coin=Tails}, 0.08 ),
+    ( {Dice=Three, Coin=Tails}, 0.08 ),
+    ( {Dice=Four, Coin=Tails}, 0.08 ),
+    ( {Dice=Five, Coin=Tails}, 0.08 ),
+    ( {Dice=Six, Coin=Tails}, 0.08 ),
+    ({}, 0.04 )
+}
+
+TossCoin performed-at 1 with-prob 0.75
+TossDice performed-at 1 with-prob 0.25
+TossCoin performed-at 2 with-prob 0.25
+TossDice performed-at 2 with-prob 0.75

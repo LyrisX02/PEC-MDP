@@ -1,0 +1,65 @@
+hungry takes-values {true, false}
+thirsty takes-values {true, false}
+mood takes-values {happy, sad}
+tired takes-values {true, false}
+
+initially-one-of {
+		( {hungry=true, thirsty=true, mood=sad, tired=true}, 0.5 ),
+		( {hungry=false, thirsty=false, mood=happy, tired=false}, 0.5 )
+	}
+
+{feed_food=true} causes-one-of
+					{
+						( {hungry=false}, 3/5 ),
+						( {hungry=false, tired=false}, 1/5 )
+						( {}, 1/5 )
+					}
+{feed_water=true} causes-one-of
+					{
+						( {thirsty=false}, 4/5 ),
+						( {}, 1/5 )
+					}
+{play=true} causes-one-of
+					{
+						( {mood=happy, tired=true}, 3/5 ),
+						( {mood=happy, tired=true, thirsty=true}, 1/5 ),
+						( {}, 1/5 )
+					}
+
+{scold=true, tired=true} causes-one-of
+					{
+						( {mood=sad}, 4/5 ),
+						( {}, 1/5 )
+					}
+
+{scold=true, tired=false} causes-one-of
+					{
+						( {mood=sad}, 3/5 ),
+						( {}, 2/5 )
+					}
+
+
+{feed_water=true, feed_food=true} causes-one-of
+					{
+						( {hungry=false,thirsty=false}, 3/5 ),
+						( {hungry=false,thirsty=true}, 2/5 )
+					}
+
+{scold=true, feed_food=true} causes-one-of
+					{
+						( {hungry=false,mood=sad}, 3/5 ),
+						( {hungry=false,mood=happy}, 2/5 )
+					}
+
+
+play performed-at 0 with-prob 3/4 if-holds {mood=sad}
+play performed-at 3 with-prob 3/4 if-holds {mood=sad}
+play performed-at 8 with-prob 3/4 if-holds {mood=sad}
+scold performed-at 5 with-prob 3/5 if-holds {mood=sad}
+scold performed-at 7 if-holds {mood=sad}
+
+feed_water performed-at 1 if-holds {thirsty=true}
+feed_water performed-at 2 if-holds {thirsty=true}
+feed_food performed-at 1 with-prob 0.3
+feed_food performed-at 2 with-prob 0.3
+feed_food performed-at 5 with-prob 0.3
