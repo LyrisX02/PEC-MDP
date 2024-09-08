@@ -506,7 +506,7 @@ class domain():
 ########################################################################################
 
 
-class PECMDP:
+class pecmdp:
     def __init__(self, states, actions, transition_probs, initial_probs):
         self.states = states
         self.actions = actions
