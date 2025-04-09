@@ -1,0 +1,57 @@
+location takes-values {home, shop}
+tea_status takes-values {in_cup, in_stock, missing}
+cup takes-values {empty, full}
+shop takes-values {open, closed}
+tea_brewed takes-values {true, false}
+
+initially-one-of {
+		( {location=home, tea_status=in_stock, cup=empty, shop=open, tea_brewed=false}, 0.4 ),
+		( {location=home, tea_status=missing, cup=empty, shop=open, tea_brewed=false}, 0.15 ),
+        ( {location=home, tea_status=missing, cup=empty, shop=closed, tea_brewed=false}, 0.15 ),
+        ( {location=shop, tea_status=in_stock, cup=empty, shop=open, tea_brewed=false}, 0.15 ),
+        ( {location=shop, tea_status=missing, cup=empty, shop=open, tea_brewed=false}, 0.15 )
+	}
+
+{travel=true, location=home} causes-one-of
+					{
+						( {location=shop}, 1 )
+					}
+
+{travel=true, location=shop} causes-one-of
+					{
+						( {location=home}, 1 )
+					}
+
+{buy=true, location=shop, shop=open} causes-one-of
+					{
+						( {tea_status=in_stock}, 1 )
+					}
+
+{pour_water=true} causes-one-of
+                    {
+                        ( {cup=full}, 1 )
+                    }
+
+{add_tea=true, tea_status=in_stock} causes-one-of
+                    {
+                        ( {tea_status=in_cup}, 1 )
+                    }
+
+{brew_tea=true, tea_status=in_cup, cup=full} causes-one-of
+                    {
+                        ( {tea_brewed=true}, 1 )
+                    }
+
+
+travel performed-at 0 with-prob 3/4 if-holds {tea_status=missing, location=home, shop=open}
+travel performed-at 0 with-prob 1/4 if-holds {tea_status=missing, location=home, shop=closed}
+travel performed-at 1 with-prob 3/4 if-holds {tea_status=missing, location=home, shop=open}
+travel performed-at 1 with-prob 1/4 if-holds {tea_status=missing, location=home, shop=closed}
+
+buy performed-at 1 with-prob 1 if-holds {tea_status=missing}
+buy performed-at 2 with-prob 1 if-holds {tea_status=missing}
+
+pour_water performed-at 3 with-prob 1 if-holds {cup=empty}
+
+add_tea performed-at 4 with-prob 1 if-holds {tea_status=in_stock}
+brew_tea performed-at 5 with-prob 1

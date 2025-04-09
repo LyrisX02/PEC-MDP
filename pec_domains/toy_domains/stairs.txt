@@ -1,0 +1,73 @@
+minimum instant: 0
+maximum instant: 3
+
+Position takes-values {One, Two, Three, Four, Five}
+initially-one-of {({Position = Three}, 1)}
+
+{Climb=true, Position=One} causes-one-of
+					{
+						( {Position=Two}, 1 )
+					}
+
+{Climb=true, Position=Two} causes-one-of
+					{
+						( {Position=Three}, 1 )
+					}
+
+{Climb=true, Position=Three} causes-one-of
+					{
+						( {Position=Four}, 1 )
+					}
+
+{Climb=true, Position=Four} causes-one-of
+					{
+						( {Position=Five}, 1 )
+					}
+
+{Climb=true, Position=Five} causes-one-of
+					{
+						( {}, 1 )
+					}
+
+{Fall=true, Position=One} causes-one-of
+					{
+						( {}, 1 )
+					}
+
+{Fall=true, Position=Two} causes-one-of
+					{
+						( {Position=One}, 1 )
+					}
+
+{Fall=true, Position=Three} causes-one-of
+					{
+						( {Position=Two}, 1 )
+					}
+
+{Fall=true, Position=Four} causes-one-of
+					{
+						( {Position=Three}, 1 )
+					}
+
+{Fall=true, Position=Five} causes-one-of
+					{
+						( {Position=Four}, 1 )
+					}
+
+{Climb=true, Fall=true} causes-one-of
+					{
+						( {}, 1 )
+					}
+
+Climb performed-at 0 with-prob 0.75
+Fall performed-at 0 with-prob 0.1
+Climb performed-at 1 with-prob 0.75
+Fall performed-at 1 with-prob 0.1
+Climb performed-at 2 with-prob 0.75
+Fall performed-at 2 with-prob 0.1
+Climb performed-at 3 with-prob 0.75
+Fall performed-at 3 with-prob 0.1
+Climb performed-at 4 with-prob 0.75
+Fall performed-at 4 with-prob 0.1
+Climb performed-at 5 with-prob 0.75
+Fall performed-at 5 with-prob 0.1

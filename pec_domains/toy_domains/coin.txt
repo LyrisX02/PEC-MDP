@@ -1,0 +1,15 @@
+minimum instant: 0
+maximum instant: 3
+
+Coin takes-values {Heads, Tails}
+initially-one-of {({Coin=Heads}, 0.5), ({Coin=Tails}, 0.5)}
+
+{TossCoin=true} causes-one-of
+					{
+						( {Coin=Heads}, 0.49 ),
+						( {Coin=Tails}, 0.49 ),
+                        ( {}, 0.02 )
+					}
+
+TossCoin performed-at 1 with-prob 1
+TossCoin performed-at 2 with-prob 1 if-holds {Coin=Tails}

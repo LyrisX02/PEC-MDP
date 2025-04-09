@@ -1,0 +1,72 @@
+carrot takes-values {unprepared, prepared}
+onion takes-values {unprepared, prepared}
+chicken takes-values {unprepared, prepared}
+garlic takes-values {unprepared, prepared}
+leek takes-values {unprepared, prepared}
+turnip takes-values {unprepared, prepared}
+soup takes-values {incomplete, complete, plated}
+
+initially-one-of {
+		( {carrot=unprepared, onion=unprepared, chicken=unprepared, garlic=unprepared, leek=unprepared, turnip=unprepared, soup=incomplete}, 1)
+	}
+
+{cut_carrot=true} causes-one-of
+					{
+						( {carrot=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cut_onion=true} causes-one-of
+					{
+						( {onion=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cut_chicken=true} causes-one-of
+					{
+						( {chicken=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cut_garlic=true} causes-one-of
+					{
+						( {garlic=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cut_leek=true} causes-one-of
+					{
+						( {leek=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cut_turnip=true} causes-one-of
+					{
+						( {turnip=prepared}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+{cook_soup=true, carrot=prepared, onion=prepared, chicken=prepared, garlic=prepared, leek=prepared, turnip=prepared} causes-one-of
+					{
+						( {soup=complete}, 0.5 ),
+                        ( {}, 0.5 )
+					}
+
+{plate_soup=true, soup=complete} causes-one-of
+					{
+						( {soup=plated}, 0.95 ),
+                        ( {}, 0.05 )
+					}
+
+
+cut_carrot performed-at 0 
+cut_onion performed-at 1 
+cut_chicken performed-at 2
+cut_garlic performed-at 3
+cut_leek performed-at 4
+cut_turnip performed-at 5
+cook_soup performed-at 6
+cook_soup performed-at 7
+cook_soup performed-at 8
+cook_soup performed-at 9
+plate_soup performed-at 10
