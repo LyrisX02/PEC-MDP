@@ -12,3 +12,68 @@ A comphrensive tutorial and demonstration of how the developped modules in 'PEC_
 This repository also contains examples of PEC domain descriptions showcasing the different properties that may be modelled into a PEC-MDP. These files are named in the form 'PEC_example_n'.
  
 Refer to 'PEC_notebook.ipynb' for a more detailed description of the utilities of the PEC-MDP modules.
+
+
+# Syntax Requirements for PEC Domains
+
+For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means:
+
+* Alphanumeric characters (a-z, A-Z, 0-9)
+* Underscores (_)
+* No spaces, hyphens, or other special characters
+
+Probabilities in i-propositions, c-propositions, and p-propositions may be expressed as integers, fractions or decimals (e.g. $1/2$, $0.5$).
+
+Any action mentioned in a c-proposition must also be mentioned in a p-proposition as the set of actions is retrieved from p-propositions. For unperformed `action`, please include `action performed at 0 with-prob 0`.
+
+### v-proposition
+
+This defines a fluent and its possible values. The values are comma-separated within curly braces.
+```
+<fluent> takes-values {<value1>, <value2>, ... ,<valueN>}
+```
+### i-proposition
+
+Each initial state possibility is enclosed in parentheses and consists of fluent-value assignments for all fluents of a domain enclosed in curly brackets and its corresponding probability.
+
+```
+initially-one-of {
+  ({<fluent1>=<value1>, <fluent2>=<value2>, ...}, <probability>),
+  ({<fluent3>=<value3>, <fluent4>=<value4>, ...}, <probability>),
+  ...
+}
+```
+### c-proposition
+```
+{<fluent1>=<value1>, <fluent2>=<value2>, ..., <action>=true} causes-one-of {
+  ({<effect_fluent1>=<effect_value1>, ...}, <probability>),
+  ({<effect_fluent2>=<effect_value2>, ...}, <probability>),
+  ...
+}
+```
+This defines the effects of actions. The left side specifies the conditions (including the action) that must be true, and the right side specifies the possible outcomes with their probabilities. Each outcome is a set of fluent-value pairs with an associated probability.
+
+### p-proposition
+
+There are four valid formats:
+
+Basic format:
+`<action> performed-at <time>`
+
+With probability:
+`<action> performed-at <time> with-prob <probability>`
+
+With condition:
+`<action> performed-at <time> if-holds {<fluent1>=<value1>, <fluent2>=<value2>, ...}`
+
+With both probability and condition:
+`<action> performed-at <time> with-prob <probability> if-holds {<fluent1>=<value1>, <fluent2>=<value2>, ...}`
+
+### time
+
+Additional domain specifications may include:
+```
+minimum instant: <time>
+maximum instant: <time>
+```
+These define the time range for the domain, with the default being derived from the minimum and maximum times in the P-propositions.
