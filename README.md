@@ -16,13 +16,13 @@ Refer to 'PEC_notebook.ipynb' for a more detailed description of the utilities o
 
 # Syntax Requirements for PEC Domains
 
-For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means:
+For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means naming should follow these conventions:
 
 * Alphanumeric characters (a-z, A-Z, 0-9)
 * Underscores (_)
 * No spaces, hyphens, or other special characters
 
-Probabilities in i-propositions, c-propositions, and p-propositions may be expressed as integers, fractions or decimals (e.g. $1/2$, $0.5$).
+Probabilities in i-propositions, c-propositions, and p-propositions may be expressed as integers, fractions or decimals (e.g. 1/2, 0.5).
 
 Any action mentioned in a c-proposition must also be mentioned in a p-proposition as the set of actions is retrieved from p-propositions. For unperformed `action`, please include `action performed at 0 with-prob 0`.
 
@@ -58,22 +58,28 @@ This defines the effects of actions. The left side specifies the conditions (inc
 There are four valid formats:
 
 Basic format:
+
 `<action> performed-at <time>`
 
 With probability:
+
 `<action> performed-at <time> with-prob <probability>`
 
 With condition:
+
 `<action> performed-at <time> if-holds {<fluent1>=<value1>, <fluent2>=<value2>, ...}`
 
 With both probability and condition:
+
 `<action> performed-at <time> with-prob <probability> if-holds {<fluent1>=<value1>, <fluent2>=<value2>, ...}`
 
 ### time
+
+Default derivation of minimum and maximum instants observes the p-propositions for the first and last instants at which an action may be performed such that the minimum instant is the first instant and the maximum instant is one after the last instant. 
 
 Additional domain specifications may include:
 ```
 minimum instant: <time>
 maximum instant: <time>
 ```
-These define the time range for the domain, with the default being derived from the minimum and maximum times in the P-propositions.
+These define the time range for the domain overriding the default derivation.
