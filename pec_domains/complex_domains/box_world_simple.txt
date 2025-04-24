@@ -1,0 +1,216 @@
+
+location takes-values {a, b, c, d}
+box1_location takes-values {a, b, c, d}
+box1_in takes-values{truck, none}
+box2_location takes-values {a, b, c, d}
+box2_in takes-values{truck, none}
+
+initially-one-of
+					{
+						( {location=c, box1_location=a, box1_in=none, box2_location=d, box2_in=none}, 1 )
+					}
+
+____________________
+
+{drive_ab=true, location=a} causes-one-of
+					{
+						( {location=b}, 1 )
+					}
+
+{drive_ba=true, location=b} causes-one-of
+					{
+						( {location=a}, 0.8 ),
+                        ( {location=d}, 0.1 ),
+                        ( {location=c}, 0.1 )
+					}
+
+{drive_bc=true, location=b} causes-one-of
+					{
+						( {location=c}, 0.8 ),
+                        ( {location=d}, 0.1 ),
+                        ( {location=a}, 0.1 )
+					}
+
+{drive_cb=true, location=c} causes-one-of
+					{
+						( {location=b}, 0.8 ),
+                        ( {location=d}, 0.2 )
+					}
+
+{drive_cd=true, location=c} causes-one-of
+					{
+						( {location=d}, 0.8 ),
+                        ( {location=b}, 0.2 )
+					}
+
+{drive_dc=true, location=d} causes-one-of
+					{
+						( {location=c}, 0.8 ),
+                        ( {location=b}, 0.2 )
+					}
+
+{drive_bd=true, location=b} causes-one-of
+					{
+						( {location=d}, 0.8 ),
+                        ( {location=a}, 0.1 ),
+                        ( {location=c}, 0.1 )
+					}
+
+{drive_db=true, location=d} causes-one-of
+					{
+						( {location=b}, 0.8 ),
+                        ( {location=c}, 0.2 )
+					}
+
+{drive_ad=true, location=a, box1_in=truck} causes-one-of
+					{
+						( {location=d}, 0.4 ),
+                        ( {location=a}, 0.1 ),
+                        ( {location=d, box1_in=none, box1_location=a}, 0.4 ),
+                        ( {location=a, box1_in=none, box1_location=a}, 0.1 )
+					}
+
+{drive_ad=true, location=a, box2_in=truck} causes-one-of
+					{
+						( {location=d}, 0.4 ),
+                        ( {location=a}, 0.1 ),
+                        ( {location=d, box2_in=none, box2_location=a}, 0.4 ),
+                        ( {location=a, box2_in=none, box2_location=a}, 0.1 )
+					}
+
+{drive_da=true, location=d, box1_in=truck} causes-one-of
+					{
+						( {location=a}, 0.4 ),
+                        ( {location=d}, 0.1 ),
+                        ( {location=a, box1_in=none, box1_location=d}, 0.4 ),
+                        ( {location=d, box1_in=none, box1_location=d}, 0.1 )
+					}
+
+{drive_da=true, location=d, box2_in=truck} causes-one-of
+					{
+						( {location=a}, 0.4 ),
+                        ( {location=d}, 0.1 ),
+                        ( {location=a, box2_in=none, box2_location=d}, 0.4 ),
+                        ( {location=d, box2_in=none, box2_location=d}, 0.1 )
+					}
+
+{drive_ad=true, location=a, box1_in=none} causes-one-of
+					{
+						( {location=d}, 0.4 ),
+                        ( {location=a}, 0.1 )
+					}
+
+{drive_ad=true, location=a, box2_in=none} causes-one-of
+					{
+						( {location=d}, 0.4 ),
+                        ( {location=a}, 0.1 )
+					}
+
+{drive_da=true, location=d, box1_in=none} causes-one-of
+					{
+						( {location=a}, 0.4 ),
+                        ( {location=d}, 0.1 )
+					}
+
+{drive_da=true, location=d, box2_in=none} causes-one-of
+					{
+						( {location=a}, 0.4 ),
+                        ( {location=d}, 0.1 )
+					}		
+
+{load_truck_box1=true, box1_location=a, location=a, box2_in=none} causes-one-of
+					{
+						( {box1_in=truck}, 1 )
+					}
+
+{load_truck_box1=true, box1_location=b, location=b, box2_in=none} causes-one-of
+					{
+						( {box1_in=truck}, 1 )
+					}
+
+{load_truck_box1=true, box1_location=c, location=c, box2_in=none} causes-one-of
+					{
+						( {box1_in=truck}, 1 )
+					}
+
+{load_truck_box1=true, box1_location=d, location=d, box2_in=none} causes-one-of
+					{
+						( {box1_in=truck}, 1 )
+					}
+
+{load_truck_box2=true, box2_location=a, location=a, box1_in=none} causes-one-of
+					{
+						( {box2_in=truck}, 1 )
+					}
+
+{load_truck_box2=true, box2_location=b, location=b, box1_in=none} causes-one-of
+					{
+						( {box2_in=truck}, 1 )
+					}
+
+{load_truck_box2=true, box2_location=c, location=c, box1_in=none} causes-one-of
+					{
+						( {box2_in=truck}, 1 )
+					}
+
+{load_truck_box2=true, box2_location=d, location=d, box1_in=none} causes-one-of
+					{
+						( {box2_in=truck}, 1 )
+					}
+
+{unload_truck_box1=true, location=a, box1_in=truck} causes-one-of
+					{
+						( {box1_in=none, box1_location=a}, 1 )
+					}
+
+{unload_truck_box1=true, location=b, box1_in=truck} causes-one-of
+					{
+						( {box1_in=none, box1_location=b}, 1 )
+					}
+
+{unload_truck_box1=true, location=c, box1_in=truck} causes-one-of
+					{
+						( {box1_in=none, box1_location=c}, 1 )
+					}
+
+{unload_truck_box1=true, location=d, box1_in=truck} causes-one-of
+					{
+						( {box1_in=none, box1_location=d}, 1 )
+					}
+
+{unload_truck_box2=true, location=a, box2_in=truck} causes-one-of
+					{
+						( {box2_in=none, box2_location=a}, 1 )
+					}
+
+{unload_truck_box2=true, location=b, box2_in=truck} causes-one-of
+					{
+						( {box2_in=none, box2_location=b}, 1 )
+					}
+
+{unload_truck_box2=true, location=c, box2_in=truck} causes-one-of
+					{
+						( {box2_in=none, box2_location=c}, 1 )
+					}
+
+{unload_truck_box2=true, location=d, box2_in=truck} causes-one-of
+					{
+						( {box2_in=none, box2_location=d}, 1 )
+					}
+
+
+drive_ab performed-at 0 with-prob 0
+drive_ba performed-at 1 with-prob 0
+drive_bc performed-at 2 with-prob 0
+drive_cb performed-at 3 with-prob 0
+drive_cd performed-at 4 with-prob 0
+drive_dc performed-at 5 with-prob 0
+drive_bd performed-at 6 with-prob 0
+drive_db performed-at 7 with-prob 0
+drive_ad performed-at 8 with-prob 0
+drive_da performed-at 9 with-prob 0
+
+load_truck_box1 performed-at 10 with-prob 0
+load_truck_box2 performed-at 11 with-prob 0
+unload_truck_box1 performed-at 12 with-prob 0
+unload_truck_box2 performed-at 13 with-prob 0

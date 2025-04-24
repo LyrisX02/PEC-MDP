@@ -406,7 +406,6 @@ class domain():
         
         # Find all c-proposition matches in domain string
         c_prop_match = re.findall(c_prop_template, domain_string, re.VERBOSE | re.DOTALL)
-        
         match_probs = [] # Create overall container for the conditions of each c-prop
         partial_container = [] # Create a container for partial fluents
         
