@@ -14,6 +14,40 @@ This repository also contains examples of PEC domain descriptions showcasing the
 Refer to 'PEC_notebook.ipynb' for a more detailed description of the utilities of the PEC-MDP modules.
 
 
+PEC-MDP/
+├── src/                          # Source code
+│   ├── PEC_Parser.py            # Core MDP-PEC translation
+│   ├── temporal_projection.py   # Temporal projection calculation
+│   ├── policy_to_pprops.py      # Translation of policy to p-propositions 
+│   └── __init__.py              # Package initialization
+├── notebooks/                   # Jupyter notebooks for demonstrations
+│   ├── pec_demonstration.ipynb  # Main PEC analysis notebook
+│   └── boxworld.ipynb          # BoxWorld domain for objective-directed learning  
+├── domains/                # Domain-specific notebooks
+│   ├── abstract_domains/    # Abstract/theoretical domains
+│   │   ├── domain_syntax_template.txt
+│   │   └── decay.txt
+│   ├── complex_domains/     # Real-world complex scenarios
+│   │   ├── box_world.txt
+│   │   ├── box_world_simple.txt
+│   │   ├── cooking_robot.txt
+│   │   ├── tamogatchi.txt
+│   │   ├── tea_making.txt
+│   │   └── tuberculosis.txt
+│   └── toy_domains/         # Simple test domains
+│       ├── bacteria.txt
+│       ├── coin.txt
+│       ├── dice_coin.txt
+│       ├── domain_syntax_template.txt
+│       └── stairs.txt
+├── .gitignore                   # Git ignore rules
+├── .gitattributes              # Git configuration
+├── requirements.txt            # Python dependencies
+├── setup.py                    # Package installation
+├── README.md                   # Project documentation
+└── LICENSE                     # License file
+
+
 # Syntax Requirements for PEC Domains
 
 For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means naming should follow these conventions:
