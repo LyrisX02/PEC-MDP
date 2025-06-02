@@ -1,155 +1,54 @@
 # PEC-MDP
 
-This repository consists of a main Python code file 'PEC_Parser.py' for parsing and translating a PEC domain description into PEC-MDP components, as well as compiling the components into a functioning PEC-MDP.
-
-This translator and executor was developped in Python 3.11.2. Requirments include:
-
-* numpy >= 1.24.2
-* regex >= 2023.10.3
-
-A comphrensive tutorial and demonstration of how the developped modules in 'PEC_Parser.py' may be used is found in the Python notebook 'PEC_notebook.ipynb'.
-
-This repository also contains examples of PEC domain descriptions showcasing the different properties that may be modelled into a PEC-MDP. These files are named in the form 'PEC_example_n'.
- 
-Refer to 'PEC_notebook.ipynb' for a more detailed description of the utilities of the PEC-MDP modules.
-
-
-PEC-MDP/
-├── src/                          # Source code
-│   ├── PEC_Parser.py            # Core MDP-PEC translation
-│   ├── temporal_projection.py   # Temporal projection calculation
-│   ├── policy_to_pprops.py      # Translation of policy to p-propositions 
-│   └── __init__.py              # Package initialization
-├── notebooks/                   # Jupyter notebooks for demonstrations
-│   ├── pec_demonstration.ipynb  # Main PEC analysis notebook
-│   └── boxworld.ipynb          # BoxWorld domain for objective-directed learning  
-├── domains/                # Domain-specific notebooks
-│   ├── abstract_domains/    # Abstract/theoretical domains
-│   │   ├── domain_syntax_template.txt
-│   │   └── decay.txt
-│   ├── complex_domains/     # Real-world complex scenarios
-│   │   ├── box_world.txt
-│   │   ├── box_world_simple.txt
-│   │   ├── cooking_robot.txt
-│   │   ├── tamogatchi.txt
-│   │   ├── tea_making.txt
-│   │   └── tuberculosis.txt
-│   └── toy_domains/         # Simple test domains
-│       ├── bacteria.txt
-│       ├── coin.txt
-│       ├── dice_coin.txt
-│       ├── domain_syntax_template.txt
-│       └── stairs.txt
-├── .gitignore                   # Git ignore rules
-├── .gitattributes              # Git configuration
-├── requirements.txt            # Python dependencies
-├── setup.py                    # Package installation
-├── README.md                   # Project documentation
-└── LICENSE                     # License file
-
-PEC-MDP/
-├── src/                          # Source code
-│   ├── PEC_Parser.py            # Core MDP-PEC translation
-│   ├── temporal_projection.py   # Temporal projection calculation
-│   ├── policy_to_pprops.py      # Translation of policy to p-propositions
-│   └── init.py              # Package initialization
-├── notebooks/                   # Jupyter notebooks for demonstrations
-│   ├── pec_demonstration.ipynb  # Main PEC analysis notebook
-│   └── boxworld.ipynb          # BoxWorld domain for objective-directed learning
-├── domains/                # Domain-specific notebooks
-│   ├── abstract_domains/    # Abstract/theoretical domains
-│   │   ├── domain_syntax_template.txt
-│   │   └── decay.txt
-│   ├── complex_domains/     # Real-world complex scenarios
-│   │   ├── box_world.txt
-│   │   ├── box_world_simple.txt
-│   │   ├── cooking_robot.txt
-│   │   ├── tamogatchi.txt
-│   │   ├── tea_making.txt
-│   │   └── tuberculosis.txt
-│   └── toy_domains/         # Simple test domains
-│       ├── bacteria.txt
-│       ├── coin.txt
-│       ├── dice_coin.txt
-│       ├── domain_syntax_template.txt
-│       └── stairs.txt
-├── .gitignore                   # Git ignore rules
-├── .gitattributes              # Git configuration
-├── requirements.txt            # Python dependencies
-├── setup.py                    # Package installation
-├── README.md                   # Project documentation
-└── LICENSE                     # License file
-
-
-PEC-MDP/
-├── src/                          # Source code
-│   ├── PEC_Parser.py            # Core MDP-PEC translation
-│   ├── temporal_projection.py   # Temporal projection calculation
-│   ├── policy_to_pprops.py      # Translation of policy to p-propositions
-│   └── init.py              # Package initialization
-├── notebooks/                   # Jupyter notebooks for demonstrations
-│   ├── pec_demonstration.ipynb  # Main PEC analysis notebook
-│   └── boxworld.ipynb          # BoxWorld domain for objective-directed learning
-├── domains/                # Domain-specific notebooks
-│   ├── abstract_domains/    # Abstract/theoretical domains
-│   │   ├── domain_syntax_template.txt
-│   │   └── decay.txt
-│   ├── complex_domains/     # Real-world complex scenarios
-│   │   ├── box_world.txt
-│   │   ├── box_world_simple.txt
-│   │   ├── cooking_robot.txt
-│   │   ├── tamogatchi.txt
-│   │   ├── tea_making.txt
-│   │   └── tuberculosis.txt
-│   └── toy_domains/         # Simple test domains
-│       ├── bacteria.txt
-│       ├── coin.txt
-│       ├── dice_coin.txt
-│       ├── domain_syntax_template.txt
-│       └── stairs.txt
-├── .gitignore                   # Git ignore rules
-├── .gitattributes              # Git configuration
-├── requirements.txt            # Python dependencies
-├── setup.py                    # Package installation
-├── README.md                   # Project documentation
-└── LICENSE                     # License file
+This repository hosts an implementation of the PEC-MDP. The core code translates Probabilistic Event Calculus (PEC) domains to the PEC-MDP framework. The repository follows the below structure:
 
 ```
 PEC-MDP/
-├── src/                          # Source code
-│   ├── PEC_Parser.py            # Core MDP-PEC translation
-│   ├── temporal_projection.py   # Temporal projection calculation
-│   ├── policy_to_pprops.py      # Translation of policy to p-propositions
-│   └── init.py                  # Package initialization
+├── PEC_Parser.py            # Core MDP-PEC translation
+├── temporal_projection.py   # Temporal projection calculation
+├── policy_to_pprops.py      # Translation of policy to p-propositions
 ├── notebooks/                   # Jupyter notebooks for demonstrations
-│   ├── pec_demonstration.ipynb  # Main PEC analysis notebook
-│   └── boxworld.ipynb          # BoxWorld domain for objective-directed learning
+│   ├── PEC_notebook.ipynb  # Main notebook for demonstrating the PEC-MDP and temporal projection utilities
+│   └── boxworld.ipynb          # BoxWorld domain example for demonstrating objective-directed learning
 ├── domains/                     # Domain-specific notebooks
 │   ├── abstract_domains/        # Abstract/theoretical domains
 │   │   ├── domain_syntax_template.txt
 │   │   └── decay.txt
-│   ├── complex_domains/         # Real-world complex scenarios
+│   ├── complex_domains/         # More complex scenarios
 │   │   ├── box_world.txt
 │   │   ├── box_world_simple.txt
 │   │   ├── cooking_robot.txt
 │   │   ├── tamogatchi.txt
 │   │   ├── tea_making.txt
 │   │   └── tuberculosis.txt
-│   └── toy_domains/             # Simple test domains
+│   └── toy_domains/             # Simple domains
 │       ├── bacteria.txt
 │       ├── coin.txt
 │       ├── dice_coin.txt
 │       ├── domain_syntax_template.txt
 │       └── stairs.txt
-├── .gitignore                   # Git ignore rules
-├── .gitattributes              # Git configuration
-├── requirements.txt            # Python dependencies
-├── setup.py                    # Package installation
-├── README.md                   # Project documentation
-└── LICENSE                     # License file
+└── README.md                   # Project documentation
 ```
 
+
+This repository consists of a main Python code file 'PEC_Parser.py' for parsing and translating a PEC domain description into PEC-MDP components, as well as compiling the components into a functioning PEC-MDP. The 'temporal_projection.py' file contains utilities for calculating temporal projections. The 'policy_to_pprops.py' file contains utilities for translating a MDP stationary or non-stationary policy into PEC's p-propositions.
+
+All source code was developed in Python 3.11.2. Requirements include:
+
+* numpy >= 1.24.2
+* regex >= 2023.10.3
+
+A comprehensive tutorial and demonstration of how the developed utilities in 'PEC_Parser.py' and 'temporal_projection' may be used is found in the Python notebook 'PEC_notebook.ipynb'.
+
+A demonstration of how reinforcement learning techniques may be applied to a logistics domain in the PEC-MDP can be found in 'boxworld.ipynb'. This also demonstrates how an optimal policy may be translated back to p-propositions through the utilities in 'policy_to_pprops.py'.
+
+This repository also contains examples of PEC domain descriptions showcasing the different properties that may be modelled into a PEC-MDP. These files are form in 'pec_domains/'.
+ 
+
+
 # Syntax Requirements for PEC Domains
+
+For a PEC domain to be successfully parsed using the 'PEC_Parser', the below requirements must be followed:
 
 For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means naming should follow these conventions:
 
