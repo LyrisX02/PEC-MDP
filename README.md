@@ -117,26 +117,35 @@ maximum instant: <time>
 ```
 These define the time range for the domain overriding the default derivation.
 
-# Brief Overview on How to Run Core Code
+# Brief Demonstration on How to Run Core Code
 
+Import the `PEC_Parser` as a module.
 ```
 import PEC_Parser
-
+```
+Read in domain text file as string
+```
 # Read domain string
 file_path = "../pec_domains/complex_domains/box_world_simple.txt"
 file = open(file_path, "r")
 domain_string = file.read()
+```
+The method `initialise_all` generates the fundamental constituents of a domain including its fluents, values, states, actions and time instants. The method must be called prior to initialising all other components of the PEC-MDP. It takes the domain string as input and extracts v-propositions to integer-encode fluents, values, and states. P-propositions are extracted to integer encode actions in the domain, including any combinations of actions that may occur simultaneously. `initialise_all` returns he dictionaries `fluent_dict`, `value_dict`, `state_dict`, and `action_dict`.
 
+```
 # Instantiate a domain object
 domain = PEC_Parser.domain()
 # Compute fluents, values, states, and actions as dictionaries for domain object
 domain.initialise_all(domain_string)
 
+# Access dictionaries
 fluent_dict = domain.fluent_dict
 value_dict = domain.value_dict
 state_dict = domain.state_dict
 action_dict = domain.action_dict
-
+```
+Compute the initial distribution, transition function and policy.
+```
 initial_distribution = domain.get_initial(domain_string)
 transition_matrix = domain.get_transition(domain_string)
 policy_matrix = domain.get_policy(domain_string)
