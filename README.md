@@ -1,10 +1,23 @@
 # PEC-MDP
 
-This repository hosts an implementation of the PEC-MDP. The core code translates Probabilistic Event Calculus (PEC) domains to the PEC-MDP framework. The repository follows the below structure:
+This repository hosts an implementation of the PEC-MDP. This repository consists of a main Python code file 'PEC_Parser.py' for parsing and translating a PEC domain description into PEC-MDP components, as well as compiling the components into a functioning PEC-MDP. The 'temporal_projection.py' file contains utilities for calculating temporal projections. The 'policy_to_pprops.py' file contains utilities for translating a MDP stationary or non-stationary policy into PEC's p-propositions.
+
+These modules were developed in Python 3.11.2. Requirements include:
+
+* numpy >= 1.24.2
+* regex >= 2023.10.3
+
+'PEC_notebook.ipynb' provides a comprehensive tutorial and demonstration of how the utilities of 'PEC_Parser.py' and 'temporal_projection'.
+
+'boxworld.ipynb' consists of a demonstration of how reinforcement learning techniques may be applied to a logistics domain in the PEC-MDP. This also demonstrates how an optimal policy may be translated back to p-propositions through the utilities in 'policy_to_pprops.py'.
+
+This repository also contains examples of PEC domain descriptions showcasing the different properties that may be modelled into a PEC-MDP. These files are found in 'pec_domains/'.
+
+The repository follows the below structure:
 
 ```
 PEC-MDP/
-├── PEC_Parser.py            # Core MDP-PEC translation
+├── PEC_Parser.py            # Core PEC-MDP translation
 ├── temporal_projection.py   # Temporal projection calculation
 ├── policy_to_pprops.py      # Translation of policy to p-propositions
 ├── notebooks/                   # Jupyter notebooks for demonstrations
@@ -31,24 +44,10 @@ PEC-MDP/
 ```
 
 
-This repository consists of a main Python code file 'PEC_Parser.py' for parsing and translating a PEC domain description into PEC-MDP components, as well as compiling the components into a functioning PEC-MDP. The 'temporal_projection.py' file contains utilities for calculating temporal projections. The 'policy_to_pprops.py' file contains utilities for translating a MDP stationary or non-stationary policy into PEC's p-propositions.
-
-All source code was developed in Python 3.11.2. Requirements include:
-
-* numpy >= 1.24.2
-* regex >= 2023.10.3
-
-A comprehensive tutorial and demonstration of how the developed utilities in 'PEC_Parser.py' and 'temporal_projection' may be used is found in the Python notebook 'PEC_notebook.ipynb'.
-
-A demonstration of how reinforcement learning techniques may be applied to a logistics domain in the PEC-MDP can be found in 'boxworld.ipynb'. This also demonstrates how an optimal policy may be translated back to p-propositions through the utilities in 'policy_to_pprops.py'.
-
-This repository also contains examples of PEC domain descriptions showcasing the different properties that may be modelled into a PEC-MDP. These files are form in 'pec_domains/'.
- 
-
 
 # Syntax Requirements for PEC Domains
 
-For a PEC domain to be successfully parsed using the 'PEC_Parser', the below requirements must be followed:
+As 'PEC_Parser.py' uses predefined regex patterns for matching the text components of a PEC domain, the below requirements must be followed:
 
 For variable names (fluents, values, actions), the regex pattern (\w+) is used, which means naming should follow these conventions:
 
@@ -117,3 +116,28 @@ minimum instant: <time>
 maximum instant: <time>
 ```
 These define the time range for the domain overriding the default derivation.
+
+# Brief Overview on How to Run Core Code
+
+```
+import PEC_Parser
+
+# Read domain string
+file_path = "../pec_domains/complex_domains/box_world_simple.txt"
+file = open(file_path, "r")
+domain_string = file.read()
+
+# Instantiate a domain object
+domain = PEC_Parser.domain()
+# Compute fluents, values, states, and actions as dictionaries for domain object
+domain.initialise_all(domain_string)
+
+fluent_dict = domain.fluent_dict
+value_dict = domain.value_dict
+state_dict = domain.state_dict
+action_dict = domain.action_dict
+
+initial_distribution = domain.get_initial(domain_string)
+transition_matrix = domain.get_transition(domain_string)
+policy_matrix = domain.get_policy(domain_string)
+```
