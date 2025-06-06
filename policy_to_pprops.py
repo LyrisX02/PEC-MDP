@@ -1,6 +1,7 @@
 import PEC_Parser
 import numpy as np 
 
+
 def find_minimal_discriminators(tuples):
     if not tuples:
         return {}
@@ -44,10 +45,10 @@ def find_minimal_discriminators(tuples):
                 
     return result.values()
 
-def translate_pprops(file_path, policy):
+def translate_pprops(domain_string, policy):
     
-    file = open(file_path, "r")
-    domain_string = file.read()
+    #file = open(file_path, "r")
+    #domain_string = file.read()
     # Instantiate a domain object
     domain = PEC_Parser.domain()
     domain.initialise_all(domain_string)
@@ -70,7 +71,7 @@ def translate_pprops(file_path, policy):
         
     initial_distribution = domain.get_initial(domain_string)
     transition_matrix = domain.get_transition(domain_string)
-    #n_steps = domain.max_instant
+    n_steps = domain.max_instant
 
     states = list(state_dict.values())
     actions = list(action_dict.values())
@@ -80,28 +81,34 @@ def translate_pprops(file_path, policy):
     T = np.array(transition_matrix)
     print("transition shape:", T.shape)
 
-    # Replace empty policy (in finished states) with null action
-    Pi_matrix = np.array([[0.0]*(len(action_dict)-1)+[1.0] if i == [] else i for i in list(policy.values())])
-    print("policy shape:", Pi_matrix.shape)
-
     # T starts (A, S, S'), make it (S', S, A)
     T_reshaped = np.transpose(T, (2, 1, 0))
-
-    # Flatten policy matrix
-    # policy has shape (S, A)
-    policy_flat = Pi_matrix.reshape(-1)
-
+    
     # Define starting state probs as vector array
     S = np.zeros(len(state_dict))
     for i in range(len(initial_distribution[0])):
         S[initial_distribution[0][i]] = initial_distribution[1][i]
+
+    # If stationary policy, make duplicates for each instant
+    try:
+        test = policy[0][0][0]
+    except:
+        policy = [policy for _ in range(n_steps)]
 
     # Define list containing state vectors
     states_at_instant = [S]
 
     # Iterate
     current = S
-    for i in range(14):
+    for i in range(n_steps):
+        
+        # Replace empty policy (in finished states) with null action
+        Pi_matrix = np.array([[0.0]*(len(action_dict)-1)+[1.0] if i == [] else i for i in policy[i]])
+
+        # Flatten policy matrix
+        # policy has shape (S, A)
+        policy_flat = Pi_matrix.reshape(-1)
+        
         S_reshaped = current.reshape(1, -1, 1)
         # Multiply together to scale probabilities based on starting probabilities
         T_matrix = T_reshaped * S_reshaped
@@ -112,17 +119,10 @@ def translate_pprops(file_path, policy):
         states_at_instant.append(next_state_probs)
         current = next_state_probs
     
-    # Cast transition matrix as array
-    T = np.array(transition_matrix)
-
-
-    # Replace empty policy (in finished states) with null action
-    Pi_matrix = np.array([[0.0]*(len(action_dict)-1)+[1.0] if i == [] else i for i in list(policy.values())])
-
     all_p_props = []
 
     # Outer loop: for each instant
-    for instant in range(len(states_at_instant)):
+    for instant in range(n_steps):
         # Define lists for states, actions and probs performed each instant
         states = []
         actions = []
@@ -132,13 +132,13 @@ def translate_pprops(file_path, policy):
             if states_at_instant[instant][s] != 0:
                 
                 # For each action that may be taken at each possible state
-                for a in range(len(policy[s])):
-                    if policy[s][a] != 0:
+                for a in range(len(policy[instant][s])):
+                    if policy[instant][s][a] != 0:
                         
                         # Append the state and the corresponding action
                         states.append(reverse_state_dict[s])
                         actions.append(a)
-                        probs.append(policy[s][a])
+                        probs.append(policy[instant][s][a])
                         #print(reverse_state_dict[s])
                         #print(f"{reverse_action_dict[a]} performed-at {instant} with-probs {policy[s][a]} if-holds {full_state_dict[s]}")
 
@@ -165,4 +165,4 @@ def translate_pprops(file_path, policy):
     with open(filename, 'w', encoding='utf-8') as file:
         file.write("\n".join(all_p_props))
         
-    return()
+    return

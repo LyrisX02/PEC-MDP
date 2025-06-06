@@ -117,7 +117,7 @@ maximum instant: <time>
 ```
 These define the time range for the domain overriding the default derivation.
 
-# Brief Demonstration on How to Run Core Code
+# Brief Demonstration on How to Run PEC-MDP Parser
 
 Import the `PEC_Parser` as a module.
 ```
@@ -149,4 +149,42 @@ Compute the initial distribution, transition function and policy.
 initial_distribution = domain.get_initial(domain_string)
 transition_matrix = domain.get_transition(domain_string)
 policy_matrix = domain.get_policy(domain_string)
+```
+
+# Brief Demonstration on How to Run Temporal Projection Module
+
+Import module and read domain into string.
+```
+import temporal_projection
+
+file_path = f"..\pec_domains\complex_domains\cooking_robot.txt"
+file = open(file_path, "r")
+domain_string = file.read()
+```
+Define query input.
+Queries consist of three parts:
+
+* Partial or complete fluent state (_type_: string)
+* Time instant (_type_:  integer)
+* Condition(s) (_type_:  list containing tuples of (integer, string))
+```
+query = "soup=plated"
+query_time = 11
+conditions = [(8, "soup=incomplete")]
+```
+Call the `calculate_temporal_query` function.
+
+```
+temporal_projection.calculate_temporal_query(domain_string, query_time, query, conditions)
+```
+
+# Brief Demonstration on How to Run `policy_to_pprops`
+
+Import and run `translate_pprobs` function. This takes a domain string as input and a stationary policy as a 2D list of shape (S x A) or a non-stationary policy as a 3D array of shape (T x S x A). Shape is detected within the function.
+
+
+```
+import policy_to_pprops
+
+policy_to_pprops.translate_pprops(domain_string, policy)
 ```

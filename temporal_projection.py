@@ -1,7 +1,7 @@
 import PEC_Parser
 import numpy as np
 
-def calculate_temporal_query(file_path, query_time, query_literal, conditions):
+def calculate_temporal_query(domain_string, query_time, query_literal, conditions):
     """_summary_
 
     Args:
@@ -11,8 +11,8 @@ def calculate_temporal_query(file_path, query_time, query_literal, conditions):
         conditions (list containing tuples (int, string)): _description_
     """
     # Read string
-    file = open(file_path, "r")
-    domain_string = file.read()
+    #file = open(file_path, "r")
+    #domain_string = file.read()
 
     # Create dictionary of conditions
     conditions_dict = {time: condition for time, condition in conditions}
